@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../providers/UserProvider";
+import { SecondoryButton } from "../atoms/buttons/SecondoryButton";
 import { SearchInput } from "../molecules/SearchInput";
 import { UserCard } from "../organisms/user/UserCard";
 
@@ -15,10 +18,16 @@ const users = [...Array(10).keys()].map((val) => {
 });
 
 export const Users = () => {
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  const onClickSwitch = () =>
+    setUserInfo({ isAdmin: userInfo === null ? true : !userInfo.isAdmin });
+
   return (
     <SContainer>
       <h2>UserList</h2>
       <SearchInput />
+      <br />
+      <SecondoryButton onClick={onClickSwitch}>切替</SecondoryButton>
       <SUserArea>
         {users.map((user) => (
           <UserCard key={user.id} user={user} />
